@@ -6,11 +6,12 @@ import org.hibernate.cfg.Configuration;
 
 import com.hibernate.activity.entity.Employee;
 
-public class ReadEmployeeDemo {
+
+public class DeleteEmployeeDemo {
 
 	public static void main(String[] args) 
 	{
-		// TODO Auto-generated method stub
+
 		SessionFactory factory = new Configuration()
 									.configure("hibernate.cfg.xml")
 									.addAnnotatedClass(Employee.class)
@@ -23,9 +24,10 @@ public class ReadEmployeeDemo {
 			
 			session.beginTransaction();
 			
-			System.out.println("Retrieving row using primary key\n");
 			Employee myEmployee = session.get(Employee.class, "Aman");
-			System.out.println(myEmployee);
+			
+			session.delete(myEmployee);
+			System.out.println("Employee deleted ");
 			
 			session.getTransaction().commit();
 			
@@ -35,6 +37,7 @@ public class ReadEmployeeDemo {
 		{
 			factory.close();
 		}
+		
 	}
 
 }

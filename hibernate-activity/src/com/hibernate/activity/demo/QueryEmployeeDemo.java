@@ -1,16 +1,20 @@
 package com.hibernate.activity.demo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import com.hibernate.activity.entity.Employee;
 
-public class ReadEmployeeDemo {
 
-	public static void main(String[] args) 
+public class QueryEmployeeDemo {
+
+	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stub
+	
 		SessionFactory factory = new Configuration()
 									.configure("hibernate.cfg.xml")
 									.addAnnotatedClass(Employee.class)
@@ -23,15 +27,16 @@ public class ReadEmployeeDemo {
 			
 			session.beginTransaction();
 			
-			System.out.println("Retrieving row using primary key\n");
-			Employee myEmployee = session.get(Employee.class, "Aman");
-			System.out.println(myEmployee);
+			List<Employee> resultList = new ArrayList<Employee>();
+			
+			resultList = session.createQuery("from Employee e where e.company = 'ATMECS'").getResultList();
+			
+			resultList.stream().forEach(System.out :: println);
 			
 			session.getTransaction().commit();
 			
-			
 		}
-		finally 
+		finally
 		{
 			factory.close();
 		}
